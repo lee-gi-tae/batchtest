@@ -21,13 +21,7 @@ class RunReq(BaseModel):
     repo_url: str
     ref: str | None = None
 
-class RunResp(BaseModel):
-    # 이 코드: 응답 요약.
-    repo_url: str
-    ref_used: str
-    saved_dir: str
-    chunk_count: int
-    inserted: int
+
 
 @app.post("/batch/run", response_model=RunResp)
 def batch_run(body: RunReq):
