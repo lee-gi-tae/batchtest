@@ -8,7 +8,6 @@ from pymilvus import connections, utility, FieldSchema, CollectionSchema, DataTy
 from app.config import MILVUS_URI, MILVUS_USER, MILVUS_PASS, MILVUS_DB, MILVUS_COL, EMBED_DIM
 
 def _connect():
-    # 이 코드가 뜻하는 바: 서버형 Milvus에 접속한다.
     connections.connect(
         alias="default",
         uri=MILVUS_URI,
@@ -18,7 +17,6 @@ def _connect():
     )
 
 def _ensure_collection() -> Collection:
-    # 이 코드가 뜻하는 바: 컬렉션 없으면 만들고 인덱스를 생성한다.
     if not utility.has_collection(MILVUS_COL):
         fields = [
             FieldSchema(name="chunk_uid", dtype=DataType.VARCHAR, is_primary=True, max_length=64),
@@ -44,7 +42,6 @@ def _ensure_collection() -> Collection:
     return col
 
 def upsert_chunks(uids: List[str], vecs, metas: List[dict]) -> int:
-    # 이 코드가 뜻하는 바: 같은 uid는 삭제 후 insert로 간단 업서트.
     _connect()
     col = _ensure_collection()
     if not uids:
